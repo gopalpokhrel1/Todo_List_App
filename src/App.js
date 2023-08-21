@@ -1,24 +1,55 @@
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import './Style.css';
+import Content from './Components/Content';
+import ContentItem from './Components/ContentItem';
+
+
+
+
+
 
 function App() {
+   const[value, setValue]= useState([]);
+
+   let getData= (data)=>{
+
+    if(data!==""){
+    setValue([...value, data])
+    }
+    else{
+      alert("Please Enter task")
+    }
+   }
+ 
+   const remove= (val)=>{
+
+       
+    const newData = value.filter((item)=>{
+      return item!== val;
+    })
+
+    setValue(newData);
+   }
+
+ 
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <>
+    < div className="container">
+        <Content send={getData} />
+        {
+          value.map((elem, id)=>{
+            return(
+              <ContentItem key={id} show={elem} index={id} hide={remove}/>
+            )
+          })
+        }
+     
     </div>
+    
+    </>
+
   );
 }
 
